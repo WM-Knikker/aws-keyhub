@@ -58,6 +58,13 @@ Your password is no longer stored in version 2 of this tool. It does store a ref
 #### Where is the configuration stored?
 The configuration is stored in ```~/.aws-keyhub/config-v2.json```
 
+#### Can I open the login link in a specific browser or browser profile?
+Yes, add an optional `browserCommand` to the `keyhub` section of the configuration file. `{url}` is replaced by the login link (it is appended as the last argument if omitted). The command is not run through a shell, so quoting is not supported. If the command fails, the default browser is used.
+```json
+"browserCommand": "firefox -P myprofile --new-tab {url}"
+```
+Note that running `aws-keyhub configure` again rewrites the file and removes this setting.
+
 #### Help! The login flow is broken, something seems to be corrupt.
 Please verify that you can successfully login to the AWS console in your browser before using this tool.
 
