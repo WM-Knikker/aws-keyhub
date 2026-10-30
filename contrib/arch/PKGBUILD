@@ -1,32 +1,43 @@
 # Maintainer: Willmar Knikker <Willmar.Knikker@topicus.nl>
 #
-# To update for a new release:
-#   1. Set pkgver to the new tag (without the leading "v") and reset pkgrel=1
-#   2. Run `updpkgsums` to refresh sha256sums
-#   3. Run `makepkg --printsrcinfo > .SRCINFO`
-#   4. Test with `makepkg -f` (or `pkgctl build` for a clean chroot)
+# Fork build: tracks the main branch of https://github.com/WM-Knikker/aws-keyhub,
+# which carries features not (yet) accepted upstream. The version is derived
+# from the upstream base release plus the fork's commit count, e.g.
+# 2.15.0.wm.r3.g07d983d, so it is recognisable as the fork build.
+#
+# To move to a new upstream base release, update _basever below.
 
-pkgname=aws-keyhub
-pkgver=2.15.0
+_pkgname=aws-keyhub
+_basever=2.15.0
+pkgname=aws-keyhub-wm
+pkgver=2.15.0.wm
 pkgrel=1
 pkgdesc='CLI login helper for the AWS CLI using SAML federated login with Topicus KeyHub'
 arch=('x86_64' 'aarch64')
-url='https://github.com/topicuskeyhub/aws-keyhub'
+url='https://github.com/WM-Knikker/aws-keyhub'
 license=('Apache-2.0')
 depends=('glibc')
-makedepends=('go')
+makedepends=('go' 'git')
+provides=("$_pkgname=$_basever")
+conflicts=('aws-keyhub')
 optdepends=('aws-cli-v2: use the generated credentials with the AWS CLI')
-source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha256sums=('f08999ee749a374602adf376382b4caff1ee56ee008c43c0a55207c705a00f44')
+source=("$_pkgname::git+$url.git#branch=main")
+sha256sums=('SKIP')
 options=('!debug')
 
+pkgver() {
+  cd "$_pkgname"
+  printf '%s.wm.r%s.g%s' "$_basever" \
+    "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
 prepare() {
-  cd "$pkgname-$pkgver"
+  cd "$_pkgname"
   go mod download -x
 }
 
 build() {
-  cd "$pkgname-$pkgver"
+  cd "$_pkgname"
   local cmd_pkg='github.com/topicuskeyhub/aws-keyhub/cmd'
   local go_version
   go_version=$(go env GOVERSION)
@@ -43,8 +54,8 @@ build() {
 }
 
 package() {
-  cd "$pkgname-$pkgver"
-  install -Dm755 build/aws-keyhub -t "$pkgdir/usr/bin/"
-  install -Dm644 README.md -t "$pkgdir/usr/share/doc/$pkgname/"
-  install -Dm644 LICENSE -t "$pkgdir/usr/share/licenses/$pkgname/"
+  cd "$_pkgname"
+  install -Dm755 build/$_pkgname -t "$pkgdir/usr/bin/"
+  install -Dm644 README.md -t "$pkgdir/usr/share/doc/$_pkgname/"
+  install -Dm644 LICENSE -t "$pkgdir/usr/share/licenses/$_pkgname/"
 }
