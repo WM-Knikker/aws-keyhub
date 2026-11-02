@@ -1,4 +1,26 @@
 # aws-keyhub
+
+> [!IMPORTANT]
+> **This is a personal fork, not the official aws-keyhub.**
+> If you are looking for the tool to use, go to the upstream project: https://github.com/topicuskeyhub/aws-keyhub (releases: https://github.com/topicuskeyhub/aws-keyhub/releases).
+> The `main` branch of this fork carries my own changes on top of upstream and comes with no support or guarantees. Unless you specifically want those changes, use the official release.
+
+### About this fork
+The `master` branch of this repository simply mirrors upstream. The `main` branch is where I keep my own modifications, which currently are:
+
+- **`browserCommand` config option**: open the login link in a specific browser or profile (see the [FAQ](#can-i-open-the-login-link-in-a-specific-browser-or-browser-profile)).
+- **Arch Linux package**: a `PKGBUILD` in [`contrib/arch`](contrib/arch) that builds this fork as `aws-keyhub-wm`. It conflicts with the upstream `aws-keyhub` package, so the two can't be installed side by side.
+
+**Why keep a separate `main` branch?**
+- I can use changes I need day to day without waiting for them to be reviewed and merged upstream, or when they may never be accepted at all.
+- Upstream stays untouched. `master` tracks upstream, and each feature lives on its own branch, so anything worth sharing can still be sent upstream as a clean pull request.
+- My daily-driver build is reproducible: the Arch package tracks `main`, and its version (e.g. `2.15.0.wm.r94.g5f98bf8`) makes it obvious that it is the fork build and not an official release.
+
+Everything below is the upstream documentation, which applies to both versions unless noted otherwise.
+
+---
+
+## About aws-keyhub
 CLI login helper for the [AWS CLI](https://aws.amazon.com/cli/) when using SAML based federated login with [Topicus KeyHub](https://www.topicus-keyhub.com).
 
 ## Usage

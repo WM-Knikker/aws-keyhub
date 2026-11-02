@@ -10,7 +10,7 @@
 _pkgname=aws-keyhub
 _basever=2.15.0
 pkgname=aws-keyhub-wm
-pkgver=2.15.0.wm
+pkgver=2.15.0.wm.r94.g5f98bf8
 pkgrel=1
 pkgdesc='CLI login helper for the AWS CLI using SAML federated login with Topicus KeyHub'
 arch=('x86_64' 'aarch64')
