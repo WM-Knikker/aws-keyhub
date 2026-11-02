@@ -3,7 +3,7 @@
 > [!IMPORTANT]
 > **This is a personal fork, not the official aws-keyhub.**
 > If you are looking for the tool to use, go to the upstream project: https://github.com/topicuskeyhub/aws-keyhub (releases: https://github.com/topicuskeyhub/aws-keyhub/releases).
-> The `main` branch of this fork carries my own changes on top of upstream and comes with no support or guarantees. Unless you specifically want those changes, use the official release.
+> The `main` branch of this fork carries my own changes on top of upstream and comes with no support or guarantees, if you like my changes please provide feedback on pr's on the official version.
 
 ### About this fork
 The `master` branch of this repository simply mirrors upstream. The `main` branch is where I keep my own modifications, which currently are:
